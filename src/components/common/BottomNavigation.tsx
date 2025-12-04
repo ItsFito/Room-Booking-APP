@@ -37,37 +37,38 @@ export function BottomNavigation() {
 
   if (!user) return null;
 
-  const baseClasses = "px-3 py-2 rounded-lg transition-colors";
+  const baseClasses = "py-1.5 sm:py-2 rounded-md transition-colors duration-200 flex flex-col items-center justify-center min-h-14 sm:min-h-16";
   const activeClasses = "text-blue-600 bg-blue-50";
-  const inactiveClasses = "text-gray-600 hover:text-gray-900";
+  const inactiveClasses = "text-gray-600 hover:text-gray-900 hover:bg-gray-50";
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
-      <div className="w-full px-2 py-2 sm:px-4">
-        <div className="flex justify-around items-center gap-1 sm:gap-2">
-          <Link href="/dashboard" className={`${baseClasses} flex-1 text-center ${pathname === "/dashboard" ? activeClasses : inactiveClasses}`}>
-            <span className="text-xs sm:text-sm font-medium block">Dashboard</span>
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 shadow-lg">
+      <div className="w-full h-14 sm:h-16 px-1 sm:px-2">
+        <div className="flex justify-between items-stretch h-full gap-0.5 sm:gap-1">
+          <Link href="/dashboard" className={`${baseClasses} flex-1 ${pathname === "/dashboard" ? activeClasses : inactiveClasses}`}>
+            <span className="text-[10px] sm:text-xs font-semibold">Dashboard</span>
           </Link>
-          <Link href="/rooms" className={`${baseClasses} flex-1 text-center ${pathname.startsWith("/rooms") ? activeClasses : inactiveClasses}`}>
-            <span className="text-xs sm:text-sm font-medium block">Rooms</span>
+          <Link href="/rooms" className={`${baseClasses} flex-1 ${pathname.startsWith("/rooms") ? activeClasses : inactiveClasses}`}>
+            <span className="text-[10px] sm:text-xs font-semibold">Rooms</span>
           </Link>
-          <Link href="/bookings" className={`${baseClasses} flex-1 text-center ${pathname.startsWith("/bookings") ? activeClasses : inactiveClasses}`}>
-            <span className="text-xs sm:text-sm font-medium block">Bookings</span>
+          <Link href="/bookings" className={`${baseClasses} flex-1 ${pathname.startsWith("/bookings") ? activeClasses : inactiveClasses}`}>
+            <span className="text-[10px] sm:text-xs font-semibold">Bookings</span>
           </Link>
           {isAdmin && (
-            <Link href="/admin" className={`${baseClasses} flex-1 text-center ${pathname.startsWith("/admin") ? activeClasses : inactiveClasses}`}>
-              <span className="text-xs sm:text-sm font-medium block">Admin</span>
+            <Link href="/admin" className={`${baseClasses} flex-1 ${pathname.startsWith("/admin") ? activeClasses : inactiveClasses}`}>
+              <span className="text-[10px] sm:text-xs font-semibold">Admin</span>
             </Link>
           )}
-          <Link href="/profile" className={`${baseClasses} flex-1 text-center ${pathname === "/profile" ? activeClasses : inactiveClasses}`}>
-            <span className="text-xs sm:text-sm font-medium block">Profile</span>
+          <Link href="/profile" className={`${baseClasses} flex-1 ${pathname === "/profile" ? activeClasses : inactiveClasses}`}>
+            <span className="text-[10px] sm:text-xs font-semibold">Profile</span>
           </Link>
-          <button onClick={handleLogout} className={`${baseClasses} flex-1 text-center ${inactiveClasses}`}>
-            <span className="text-xs sm:text-sm font-medium block">Logout</span>
+          <button onClick={handleLogout} className={`${baseClasses} flex-1 ${inactiveClasses}`}>
+            <span className="text-[10px] sm:text-xs font-semibold">Logout</span>
           </button>
         </div>
       </div>
     </nav>
   );
 }
+
 
