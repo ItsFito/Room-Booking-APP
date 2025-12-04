@@ -43,30 +43,31 @@ export function BottomNavigation() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
-      <div className="max-w-4xl mx-auto px-4 py-2">
-        <div className="flex justify-around items-center">
-          <Link href="/dashboard" className={`${baseClasses} ${pathname === "/dashboard" ? activeClasses : inactiveClasses}`}>
-            <span className="text-sm font-medium">Dashboard</span>
+      <div className="w-full px-2 py-2 sm:px-4">
+        <div className="flex justify-around items-center gap-1 sm:gap-2">
+          <Link href="/dashboard" className={`${baseClasses} flex-1 text-center ${pathname === "/dashboard" ? activeClasses : inactiveClasses}`}>
+            <span className="text-xs sm:text-sm font-medium block">Dashboard</span>
           </Link>
-          <Link href="/rooms" className={`${baseClasses} ${pathname.startsWith("/rooms") ? activeClasses : inactiveClasses}`}>
-            <span className="text-sm font-medium">Rooms</span>
+          <Link href="/rooms" className={`${baseClasses} flex-1 text-center ${pathname.startsWith("/rooms") ? activeClasses : inactiveClasses}`}>
+            <span className="text-xs sm:text-sm font-medium block">Rooms</span>
           </Link>
-          <Link href="/bookings" className={`${baseClasses} ${pathname.startsWith("/bookings") ? activeClasses : inactiveClasses}`}>
-            <span className="text-sm font-medium">Bookings</span>
+          <Link href="/bookings" className={`${baseClasses} flex-1 text-center ${pathname.startsWith("/bookings") ? activeClasses : inactiveClasses}`}>
+            <span className="text-xs sm:text-sm font-medium block">Bookings</span>
           </Link>
           {isAdmin && (
-            <Link href="/admin" className={`${baseClasses} ${pathname.startsWith("/admin") ? activeClasses : inactiveClasses}`}>
-              <span className="text-sm font-medium">Admin</span>
+            <Link href="/admin" className={`${baseClasses} flex-1 text-center ${pathname.startsWith("/admin") ? activeClasses : inactiveClasses}`}>
+              <span className="text-xs sm:text-sm font-medium block">Admin</span>
             </Link>
           )}
-          <Link href="/profile" className={`${baseClasses} ${pathname === "/profile" ? activeClasses : inactiveClasses}`}>
-            <span className="text-sm font-medium">Profile</span>
+          <Link href="/profile" className={`${baseClasses} flex-1 text-center ${pathname === "/profile" ? activeClasses : inactiveClasses}`}>
+            <span className="text-xs sm:text-sm font-medium block">Profile</span>
           </Link>
-          <button onClick={handleLogout} className={`${baseClasses} ${inactiveClasses}`}>
-            <span className="text-sm font-medium">Logout</span>
+          <button onClick={handleLogout} className={`${baseClasses} flex-1 text-center ${inactiveClasses}`}>
+            <span className="text-xs sm:text-sm font-medium block">Logout</span>
           </button>
         </div>
       </div>
     </nav>
   );
 }
+
