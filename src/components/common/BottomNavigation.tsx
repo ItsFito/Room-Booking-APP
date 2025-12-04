@@ -37,9 +37,15 @@ export function BottomNavigation() {
 
   if (!user) return null;
 
-  const baseClasses = "rounded-sm transition-colors duration-200 flex flex-col items-center justify-center";
-  const activeClasses = "text-blue-600 bg-blue-50";
-  const inactiveClasses = "text-gray-600 hover:text-gray-900 hover:bg-gray-50";
+const mobileFirstBaseClasses = "rounded-sm transition-colors duration-200 flex flex-col items-center justify-center \
+  **w-full md:w-auto** \
+  **p-3 md:p-4** \
+  **text-sm md:text-base**"; 
+  
+const activeClasses = "**font-semibold** text-blue-600 bg-blue-50 **md:bg-blue-100**"; 
+// Ditambahkan font-semibold untuk menekankan keadaan aktif. Warna latar diubah sedikit pada desktop.
+
+const inactiveClasses = "text-gray-600 hover:text-gray-900 hover:bg-gray-50";
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
