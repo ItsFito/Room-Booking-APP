@@ -53,8 +53,8 @@ export default function DashboardPage() {
       <MainLayout>
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Welcome, {user?.email}!</h1>
-            <p className="text-gray-600">Manage your room bookings</p>
+            <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-2">Welcome, {user?.email}!</h1>
+            <p className="text-sm sm:text-base text-gray-600">Manage your room bookings</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
