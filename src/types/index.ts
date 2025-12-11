@@ -32,6 +32,7 @@ export interface Booking {
   notes?: string;
   created_at: string;
   updated_at: string;
+  rooms?: Room;
 }
 
 export interface BookingToken {

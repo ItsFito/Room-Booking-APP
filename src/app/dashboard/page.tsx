@@ -13,7 +13,6 @@ import Link from "next/link";
 export default function DashboardPage() {
   const [user, setUser] = useState<any>(null);
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const [rooms, setRooms] = useState<Map<string, Room>>(new Map());
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,16 +23,6 @@ export default function DashboardPage() {
           setUser(currentUser);
           const userBookings = await bookingService.getBookingsByUserId(currentUser.id);
           setBookings(userBookings);
-
-          // Load room data for each booking
-          const roomMap = new Map<string, Room>();
-          for (const booking of userBookings) {
-            const room = await roomService.getRoomById(booking.room_id);
-            if (room) {
-              roomMap.set(booking.room_id, room);
-            }
-          }
-          setRooms(roomMap);
         }
       } catch (error) {
         console.error("Error loading data:", error);
@@ -87,7 +76,7 @@ export default function DashboardPage() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {bookings.slice(0, 6).map((booking) => (
-                  <BookingCard key={booking.id} booking={booking} room={rooms.get(booking.room_id)} />
+                  <BookingCard key={booking.id} booking={booking} room={booking.rooms!} />
                 ))}
               </div>
             )}
