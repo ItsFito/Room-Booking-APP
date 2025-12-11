@@ -25,8 +25,7 @@ export function RoomCard({ room }: RoomCardProps) {
             <p className="font-semibold text-gray-900">{room.capacity} persons</p>
           </div>
           <div>
-            <p className="text-gray-500">Price/Hour</p>
-            <p className="font-semibold text-gray-900">Rp {room.price_per_hour.toLocaleString()}</p>
+            {/* Price removed as per request */}
           </div>
         </div>
         <p className="text-gray-500 text-xs mt-2">📍 {room.location}</p>

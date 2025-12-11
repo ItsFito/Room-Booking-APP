@@ -13,7 +13,6 @@ export interface Room {
   capacity: number;
   location: string;
   image_url?: string;
-  price_per_hour: number;
   created_at: string;
   updated_at: string;
 }

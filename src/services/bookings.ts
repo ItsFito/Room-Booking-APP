@@ -21,7 +21,6 @@ const MOCK_BOOKINGS: Booking[] = [
       description: "Large conference hall",
       capacity: 50,
       location: "Floor 1",
-      price_per_hour: 500000,
       created_at: "",
       updated_at: ""
     }

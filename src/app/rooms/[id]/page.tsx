@@ -100,10 +100,10 @@ export default function RoomDetailPage() {
                   <p className="text-2xl font-bold text-gray-900">{room.capacity} persons</p>
                 </div>
                 <div className="bg-green-50 rounded-lg p-4">
-                  <p className="text-gray-600 text-sm">Price per Hour</p>
-                  <p className="text-2xl font-bold text-gray-900">Rp {room.price_per_hour.toLocaleString()}</p>
-                </div>
-                <div className="bg-purple-50 rounded-lg p-4">
+                  <div className="bg-purple-50 rounded-lg p-4">
+                    <p className="text-gray-600 text-sm">Status</p>
+                    <p className="text-2xl font-bold text-green-600">Available</p>
+                  </div>
                   <p className="text-gray-600 text-sm">Location</p>
                   <p className="text-lg font-semibold text-gray-900">{room.location}</p>
                 </div>
