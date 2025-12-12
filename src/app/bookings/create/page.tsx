@@ -6,16 +6,19 @@ import { MainLayout } from "@/components/common/MainLayout";
 import { createClient } from "@/lib/supabase";
 import { toast } from "sonner";
 
+import { User } from "@supabase/supabase-js";
+import { Room } from "@/types";
+
 function CreateBookingPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = createClient();
 
   const roomId = searchParams.get("roomId");
-  const [room, setRoom] = useState<any>(null);
+  const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const [formData, setFormData] = useState({
     startDate: "",

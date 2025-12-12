@@ -20,7 +20,6 @@ export default function AdminRoomsPage() {
     description: "",
     capacity: 1,
     location: "",
-    price_per_hour: 0,
     image_url: "",
   });
 
@@ -72,7 +71,6 @@ export default function AdminRoomsPage() {
         description: "",
         capacity: 1,
         location: "",
-        price_per_hour: 0,
         image_url: "",
       });
       setEditingRoom(null);
@@ -89,7 +87,6 @@ export default function AdminRoomsPage() {
       description: room.description,
       capacity: room.capacity,
       location: room.location,
-      price_per_hour: room.price_per_hour,
       image_url: room.image_url || "",
     });
     setShowForm(true);
@@ -129,7 +126,6 @@ export default function AdminRoomsPage() {
                   description: "",
                   capacity: 1,
                   location: "",
-                  price_per_hour: 0,
                   image_url: "",
                 });
               }}
@@ -165,28 +161,17 @@ export default function AdminRoomsPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Capacity (persons)</label>
-                    <input
-                      type="number"
-                      value={formData.capacity}
-                      onChange={(e) => setFormData({ ...formData, capacity: parseInt(e.target.value) })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      min="1"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Price per Hour (Rp)</label>
-                    <input
-                      type="number"
-                      value={formData.price_per_hour}
-                      onChange={(e) => setFormData({ ...formData, price_per_hour: parseInt(e.target.value) })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      min="0"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Capacity (persons)</label>
+                  <input
+                    type="number"
+                    value={formData.capacity}
+                    onChange={(e) => setFormData({ ...formData, capacity: parseInt(e.target.value) })}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    min="1"
+                  />
                 </div>
+
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
@@ -228,10 +213,7 @@ export default function AdminRoomsPage() {
                     <p className="text-gray-500">Capacity</p>
                     <p className="font-semibold">{room.capacity} persons</p>
                   </div>
-                  <div>
-                    <p className="text-gray-500">Price/Hour</p>
-                    <p className="font-semibold">Rp {room.price_per_hour.toLocaleString()}</p>
-                  </div>
+
                 </div>
 
                 <p className="text-gray-500 text-xs mb-4">📍 {room.location}</p>
@@ -250,7 +232,7 @@ export default function AdminRoomsPage() {
 
           {rooms.length === 0 && !showForm && <p className="text-center text-gray-600">No rooms yet. Create one to get started!</p>}
         </div>
-      </MainLayout>
-    </ProtectedRoute>
+      </MainLayout >
+    </ProtectedRoute >
   );
 }

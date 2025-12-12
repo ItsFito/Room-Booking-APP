@@ -15,7 +15,6 @@ import { addHours } from "date-fns";
 export default function AdminBookingsPage() {
   const router = useRouter();
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const [rooms, setRooms] = useState<Map<string, Room>>(new Map());
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,16 +31,6 @@ export default function AdminBookingsPage() {
 
         const allBookings = await bookingService.getAllBookings();
         setBookings(allBookings);
-
-        const roomMap = new Map<string, Room>();
-        const uniqueRoomIds = [...new Set(allBookings.map((b) => b.room_id))];
-        for (const roomId of uniqueRoomIds) {
-          const room = await roomService.getRoomById(roomId);
-          if (room) {
-            roomMap.set(roomId, room);
-          }
-        }
-        setRooms(roomMap);
       } catch (error) {
         console.error("Error loading bookings:", error);
       } finally {
@@ -126,7 +115,7 @@ export default function AdminBookingsPage() {
                   <div key={booking.id} className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">{rooms.get(booking.room_id)?.name || "Room"}</h3>
+                        <h3 className="text-lg font-semibold text-gray-900">{booking.rooms?.name || "Room"}</h3>
                         <p className="text-gray-600 text-sm">
                           {formatDate(booking.start_date)} • {formatTime(booking.start_time)} - {formatTime(booking.end_time)}
                         </p>
@@ -136,10 +125,10 @@ export default function AdminBookingsPage() {
 
                     <div className="bg-white rounded p-3 mb-4 text-sm">
                       <p className="text-gray-600">
-                        <strong>Location:</strong> {rooms.get(booking.room_id)?.location}
+                        <strong>Location:</strong> {booking.rooms?.location}
                       </p>
                       <p className="text-gray-600">
-                        <strong>Capacity:</strong> {rooms.get(booking.room_id)?.capacity} persons
+                        <strong>Capacity:</strong> {booking.rooms?.capacity} persons
                       </p>
                       {booking.notes && (
                         <p className="text-gray-600">
@@ -173,7 +162,7 @@ export default function AdminBookingsPage() {
                   <div key={booking.id} className="bg-green-50 border border-green-200 rounded-lg p-6">
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">{rooms.get(booking.room_id)?.name || "Room"}</h3>
+                        <h3 className="text-lg font-semibold text-gray-900">{booking.rooms?.name || "Room"}</h3>
                         <p className="text-gray-600 text-sm">
                           {formatDate(booking.start_date)} • {formatTime(booking.start_time)} - {formatTime(booking.end_time)}
                         </p>

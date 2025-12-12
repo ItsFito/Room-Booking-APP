@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "sonner";
-import { PWAInstall } from "@/components/common/PWAInstall";
 
 export const metadata: Metadata = {
   title: "Room Booking System",
@@ -35,7 +34,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="bg-gray-50">
-        <PWAInstall />
+
         {children}
         <Toaster position="top-right" />
       </body>

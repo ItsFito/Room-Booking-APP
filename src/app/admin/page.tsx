@@ -99,6 +99,14 @@ export default function AdminPage() {
                 <button className="text-green-600 hover:text-green-700 font-medium">Go to Bookings →</button>
               </div>
             </Link>
+
+            <Link href="/admin/analytics">
+              <div className="bg-purple-50 rounded-lg p-6 cursor-pointer hover:shadow-lg transition-shadow border border-purple-200 md:col-span-2">
+                <h2 className="text-xl font-bold text-gray-900 mb-2">📊 Analytics Dashboard</h2>
+                <p className="text-gray-600 mb-4">View insights and facility usage trends</p>
+                <button className="text-purple-600 hover:text-purple-700 font-medium">View Reports →</button>
+              </div>
+            </Link>
           </div>
         </div>
       </MainLayout>
