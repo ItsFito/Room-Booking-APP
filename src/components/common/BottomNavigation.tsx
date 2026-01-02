@@ -5,11 +5,12 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { authService } from "@/services/auth";
 import { toast } from "sonner";
+import type { User } from "@supabase/supabase-js";
 
 export function BottomNavigation() {
   const pathname = usePathname();
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export function BottomNavigation() {
       await authService.logout();
       toast.success("Logged out successfully");
       router.push("/auth/login");
-    } catch (error) {
+    } catch {
       toast.error("Failed to logout");
     }
   };

@@ -10,7 +10,6 @@ import { Booking, Room } from "@/types";
 import { toast } from "sonner";
 import { formatDate, formatTime } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { addHours } from "date-fns";
 
 export default function AdminBookingsPage() {
   const router = useRouter();
@@ -58,7 +57,6 @@ export default function AdminBookingsPage() {
       if (!booking) return;
 
       // Calculate expiration time (end time of booking)
-      const [endHour, endMin] = booking.end_time.split(":").map(Number);
       const expiresAt = new Date(`${booking.start_date}T${booking.end_time}:00`).toISOString();
 
       await bookingService.approveBooking(bookingId, expiresAt);
@@ -66,8 +64,8 @@ export default function AdminBookingsPage() {
       setBookings(bookings.map((b) => (b.id === bookingId ? { ...b, status: "approved" } : b)));
 
       toast.success("Booking approved and token generated!");
-    } catch (error: any) {
-      toast.error(error.message || "Failed to approve booking");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Failed to approve booking");
     }
   };
 
@@ -79,8 +77,8 @@ export default function AdminBookingsPage() {
       setBookings(bookings.filter((b) => b.id !== bookingId));
 
       toast.success("Booking rejected and removed from pending list");
-    } catch (error: any) {
-      toast.error(error.message || "Failed to reject booking");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Failed to reject booking");
     }
   };
 

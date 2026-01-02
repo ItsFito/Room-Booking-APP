@@ -1,10 +1,12 @@
 import { supabase } from "@/lib/supabase";
 import { User } from "@/types";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 export const authService = {
   async register(email: string, password: string, fullName: string) {
+    if (!supabase) throw new Error("Supabase not initialized");
     try {
-      const { data: authData, error: authError } = await supabase?.auth.signUp({
+      const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
       });
@@ -12,7 +14,7 @@ export const authService = {
       if (authError) throw authError;
 
       if (authData?.user) {
-        const { error: profileError } = await supabase?.from("users").insert({
+        const { error: profileError } = await supabase.from("users").insert({
           id: authData.user.id,
           email,
           full_name: fullName,
@@ -29,8 +31,9 @@ export const authService = {
   },
 
   async login(email: string, password: string) {
+    if (!supabase) throw new Error("Supabase not initialized");
     try {
-      const { data, error } = await supabase?.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -43,8 +46,9 @@ export const authService = {
   },
 
   async logout() {
+    if (!supabase) throw new Error("Supabase not initialized");
     try {
-      const { error } = await supabase?.auth.signOut();
+      const { error } = await supabase.auth.signOut();
       if (error) throw error;
       return { success: true };
     } catch (error) {
@@ -53,30 +57,30 @@ export const authService = {
   },
 
   async getCurrentUser() {
+    if (!supabase) return null;
     try {
-      const { data, error } = await supabase?.auth.getUser();
-      if (error) return null;
+      const { data } = await supabase.auth.getUser();
       return data?.user;
-    } catch (error) {
+    } catch {
       return null;
     }
   },
 
   async getUserProfile(userId: string): Promise<User | null> {
+    if (!supabase) return null;
     try {
-      const { data, error } = await supabase?.from("users").select("*").eq("id", userId).single();
-
-      if (error) return null;
+      const { data } = await supabase.from("users").select("*").eq("id", userId).single();
       return data;
-    } catch (error) {
+    } catch {
       return null;
     }
   },
 
-  async onAuthStateChange(callback: (user: any) => void) {
-    const { data } = supabase?.auth.onAuthStateChange((event: string, session: any) => {
+  async onAuthStateChange(callback: (user: SupabaseUser | null) => void) {
+    if (!supabase) return undefined;
+    const { data } = supabase.auth.onAuthStateChange((event: string, session) => {
       callback(session?.user || null);
-    }) || { data: null };
+    });
 
     return data?.subscription;
   },

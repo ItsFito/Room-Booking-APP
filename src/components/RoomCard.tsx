@@ -2,7 +2,7 @@
 
 import { Room } from "@/types";
 import Link from "next/link";
-import { formatDate } from "@/lib/utils";
+import Image from "next/image";
 
 interface RoomCardProps {
   room: Room;
@@ -13,8 +13,8 @@ export function RoomCard({ room }: RoomCardProps) {
     <Link href={`/rooms/${room.id}`}>
       <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 cursor-pointer">
         {room.image_url && (
-          <div className="w-full h-40 bg-gray-200 rounded-lg mb-4 overflow-hidden">
-            <img src={room.image_url} alt={room.name} className="w-full h-full object-cover" />
+          <div className="w-full h-40 bg-gray-200 rounded-lg mb-4 overflow-hidden relative">
+            <Image src={room.image_url} alt={room.name} fill className="object-cover" />
           </div>
         )}
         <h3 className="text-lg font-semibold text-gray-900 mb-2">{room.name}</h3>

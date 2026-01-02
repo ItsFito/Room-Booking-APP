@@ -28,8 +28,8 @@ export default function RegisterPage() {
       await authService.register(email, password, fullName);
       toast.success("Registration successful! Please check your email.");
       router.push("/auth/login");
-    } catch (error: any) {
-      toast.error(error.message || "Registration failed");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Registration failed");
     } finally {
       setLoading(false);
     }

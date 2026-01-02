@@ -9,8 +9,6 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Link from "next/link";
 
 export default function AdminPage() {
-  const [user, setUser] = useState<any>(null);
-  const [profile, setProfile] = useState<any>(null);
   const [stats, setStats] = useState({
     totalRooms: 0,
     totalBookings: 0,
@@ -23,7 +21,6 @@ export default function AdminPage() {
       try {
         const currentUser = await authService.getCurrentUser();
         if (currentUser) {
-          setUser(currentUser);
           const profileData = await authService.getUserProfile(currentUser.id);
 
           // Check if user is admin
@@ -31,8 +28,6 @@ export default function AdminPage() {
             window.location.href = "/dashboard";
             return;
           }
-
-          setProfile(profileData);
 
           // Load statistics
           const allRooms = await roomService.getAllRooms();

@@ -1,10 +1,10 @@
-import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+import { createClient as createSupabaseClient, SupabaseClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 // Only throw error on client-side or during runtime, not at build time
-let supabaseClient: any = null;
+let supabaseClient: SupabaseClient | null = null;
 
 export function getSupabase() {
   if (typeof window === "undefined") {

@@ -9,9 +9,10 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { BookingCard } from "@/components/BookingCard";
 import { Booking, Room } from "@/types";
 import Link from "next/link";
+import type { User } from "@supabase/supabase-js";
 
 export default function DashboardPage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [rooms, setRooms] = useState<Map<string, Room>>(new Map());
   const [loading, setLoading] = useState(true);

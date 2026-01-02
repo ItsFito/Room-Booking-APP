@@ -5,9 +5,10 @@ import { authService } from "@/services/auth";
 import { MainLayout } from "@/components/common/MainLayout";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { User } from "@/types";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 export default function ProfilePage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
   const [profile, setProfile] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 

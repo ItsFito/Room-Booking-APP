@@ -7,14 +7,12 @@ import Link from "next/link";
 
 export default function Home() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkUser = async () => {
       try {
         const currentUser = await authService.getCurrentUser();
-        setUser(currentUser);
         if (currentUser) {
           router.push("/dashboard");
         }

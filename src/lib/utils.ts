@@ -21,7 +21,12 @@ export function formatTime(time: string): string {
   return time.substring(0, 5);
 }
 
-export function isTimeSlotAvailable(startTime: string, endTime: string, unavailableSlots: any[]): boolean {
+interface TimeSlot {
+  start_time: string;
+  end_time: string;
+}
+
+export function isTimeSlotAvailable(startTime: string, endTime: string, unavailableSlots: TimeSlot[]): boolean {
   const [startHour, startMin] = startTime.split(":").map(Number);
   const [endHour, endMin] = endTime.split(":").map(Number);
   const startMinutes = startHour * 60 + startMin;
