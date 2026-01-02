@@ -1,10 +1,12 @@
 "use client";
 
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MainLayout } from "@/components/common/MainLayout";
 import { createClient } from "@/lib/supabase";
 import { toast } from "sonner";
+import type { User } from "@supabase/supabase-js";
+import type { Room } from "@/types";
 
 function CreateBookingPageContent() {
   const router = useRouter();
@@ -12,10 +14,10 @@ function CreateBookingPageContent() {
   const supabase = createClient();
 
   const roomId = searchParams.get("roomId");
-  const [room, setRoom] = useState<any>(null);
+  const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const [formData, setFormData] = useState({
     startDate: "",
@@ -24,6 +26,21 @@ function CreateBookingPageContent() {
     endTime: "10:00",
     notes: "",
   });
+
+  const fetchRoom = useCallback(async () => {
+    try {
+      const { data, error } = await supabase.from("rooms").select("*").eq("id", roomId).single();
+
+      if (error) throw error;
+      setRoom(data);
+    } catch (error) {
+      console.error("Error fetching room:", error);
+      toast.error("Failed to load room details");
+      router.push("/rooms");
+    } finally {
+      setLoading(false);
+    }
+  }, [roomId, router, supabase]);
 
   useEffect(() => {
     if (!roomId) {
@@ -38,22 +55,7 @@ function CreateBookingPageContent() {
     });
 
     fetchRoom();
-  }, [roomId]);
-
-  const fetchRoom = async () => {
-    try {
-      const { data, error } = await supabase.from("rooms").select("*").eq("id", roomId).single();
-
-      if (error) throw error;
-      setRoom(data);
-    } catch (error) {
-      console.error("Error fetching room:", error);
-      toast.error("Failed to load room details");
-      router.push("/rooms");
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [roomId, fetchRoom, router, supabase.auth]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,7 +78,7 @@ function CreateBookingPageContent() {
 
     setSubmitting(true);
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("bookings")
         .insert({
           user_id: user.id,

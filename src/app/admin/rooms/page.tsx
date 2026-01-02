@@ -62,7 +62,7 @@ export default function AdminRoomsPage() {
         setRooms(rooms.map((r) => (r.id === updated.id ? updated : r)));
         toast.success("Room updated successfully");
       } else {
-        const created = await roomService.createRoom(formData as any);
+        const created = await roomService.createRoom(formData as Omit<Room, "id" | "created_at" | "updated_at">);
         setRooms([...rooms, created]);
         toast.success("Room created successfully");
       }
@@ -77,8 +77,8 @@ export default function AdminRoomsPage() {
       });
       setEditingRoom(null);
       setShowForm(false);
-    } catch (error: any) {
-      toast.error(error.message || "Failed to save room");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Failed to save room");
     }
   };
 
@@ -101,8 +101,8 @@ export default function AdminRoomsPage() {
         await roomService.deleteRoom(id);
         setRooms(rooms.filter((r) => r.id !== id));
         toast.success("Room deleted successfully");
-      } catch (error: any) {
-        toast.error(error.message || "Failed to delete room");
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Failed to delete room");
       }
     }
   };

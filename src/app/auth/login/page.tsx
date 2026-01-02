@@ -20,8 +20,8 @@ export default function LoginPage() {
       await authService.login(email, password);
       toast.success("Login successful!");
       router.push("/dashboard");
-    } catch (error: any) {
-      toast.error(error.message || "Login failed");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Login failed");
     } finally {
       setLoading(false);
     }
@@ -64,7 +64,7 @@ export default function LoginPage() {
         </form>
 
         <p className="text-center text-gray-600 mt-6">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link href="/auth/register" className="text-blue-600 hover:underline font-medium">
             Sign up
           </Link>

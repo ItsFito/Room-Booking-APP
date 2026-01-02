@@ -26,6 +26,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const checkSession = async () => {
+      if (!supabase) {
+        setLoading(false);
+        return;
+      }
       const { data } = await supabase.auth.getSession();
       const session: Session | null = data.session;
       setUser(session?.user ?? null);
@@ -33,6 +37,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     checkSession();
+
+    if (!supabase) return;
 
     const {
       data: { subscription },
@@ -47,16 +53,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    if (!supabase) throw new Error("Supabase not initialized");
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
   };
 
   const signUp = async (email: string, password: string) => {
+    if (!supabase) throw new Error("Supabase not initialized");
     const { error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
   };
 
   const signOut = async () => {
+    if (!supabase) throw new Error("Supabase not initialized");
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
   };

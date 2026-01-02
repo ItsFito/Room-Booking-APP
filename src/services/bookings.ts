@@ -4,8 +4,9 @@ import { generateToken } from "@/lib/utils";
 
 export const bookingService = {
   async createBooking(booking: Omit<Booking, "id" | "created_at" | "updated_at">) {
+    if (!supabase) throw new Error("Supabase not initialized");
     try {
-      const { data, error } = await supabase?.from("bookings").insert([booking]).select().single();
+      const { data, error } = await supabase.from("bookings").insert([booking]).select().single();
 
       if (error) throw error;
       return data;
@@ -15,8 +16,9 @@ export const bookingService = {
   },
 
   async getBookingsByUserId(userId: string): Promise<Booking[]> {
+    if (!supabase) return [];
     try {
-      const { data, error } = await supabase?.from("bookings").select("*").eq("user_id", userId).order("created_at", { ascending: false });
+      const { data, error } = await supabase.from("bookings").select("*").eq("user_id", userId).order("created_at", { ascending: false });
 
       if (error) throw error;
       return data || [];
@@ -26,8 +28,9 @@ export const bookingService = {
   },
 
   async getAllBookings(): Promise<Booking[]> {
+    if (!supabase) return [];
     try {
-      const { data, error } = await supabase?.from("bookings").select("*").order("created_at", { ascending: false });
+      const { data, error } = await supabase.from("bookings").select("*").order("created_at", { ascending: false });
 
       if (error) throw error;
       return data || [];
@@ -37,19 +40,21 @@ export const bookingService = {
   },
 
   async getBookingById(id: string): Promise<Booking | null> {
+    if (!supabase) return null;
     try {
-      const { data, error } = await supabase?.from("bookings").select("*").eq("id", id).single();
+      const { data, error } = await supabase.from("bookings").select("*").eq("id", id).single();
 
       if (error) throw error;
       return data;
-    } catch (error) {
+    } catch {
       return null;
     }
   },
 
   async updateBookingStatus(id: string, status: string) {
+    if (!supabase) throw new Error("Supabase not initialized");
     try {
-      const { data, error } = await supabase?.from("bookings").update({ status, updated_at: new Date().toISOString() }).eq("id", id).select().single();
+      const { data, error } = await supabase.from("bookings").update({ status, updated_at: new Date().toISOString() }).eq("id", id).select().single();
 
       if (error) throw error;
       return data;
@@ -59,11 +64,12 @@ export const bookingService = {
   },
 
   async approveBooking(id: string, expiresAt: string) {
+    if (!supabase) throw new Error("Supabase not initialized");
     try {
       const token = generateToken();
 
       const { data, error } = await supabase
-        ?.from("bookings")
+        .from("bookings")
         .update({
           status: "approved",
           token,
@@ -82,9 +88,10 @@ export const bookingService = {
   },
 
   async rejectBooking(id: string) {
+    if (!supabase) throw new Error("Supabase not initialized");
     try {
       const { data, error } = await supabase
-        ?.from("bookings")
+        .from("bookings")
         .update({
           status: "rejected",
           updated_at: new Date().toISOString(),
@@ -101,8 +108,9 @@ export const bookingService = {
   },
 
   async getUnavailableSlots(roomId: string, date: string) {
+    if (!supabase) return [];
     try {
-      const { data, error } = await supabase?.from("bookings").select("start_time, end_time").eq("room_id", roomId).eq("start_date", date).in("status", ["approved", "pending"]);
+      const { data, error } = await supabase.from("bookings").select("start_time, end_time").eq("room_id", roomId).eq("start_date", date).in("status", ["approved", "pending"]);
 
       if (error) throw error;
       return data || [];
@@ -112,8 +120,9 @@ export const bookingService = {
   },
 
   async deleteBooking(id: string) {
+    if (!supabase) throw new Error("Supabase not initialized");
     try {
-      const { error } = await supabase?.from("bookings").delete().eq("id", id);
+      const { error } = await supabase.from("bookings").delete().eq("id", id);
 
       if (error) throw error;
       return { success: true };

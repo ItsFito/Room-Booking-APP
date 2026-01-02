@@ -3,12 +3,12 @@
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { roomService } from "@/services/rooms";
-import { bookingService } from "@/services/bookings";
 import { MainLayout } from "@/components/common/MainLayout";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { Room } from "@/types";
-import { toast } from "sonner";
 import { authService } from "@/services/auth";
+import type { User } from "@supabase/supabase-js";
+import Image from "next/image";
 
 export default function RoomDetailPage() {
   const params = useParams();
@@ -16,7 +16,7 @@ export default function RoomDetailPage() {
   const roomId = params.id as string;
   const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -67,8 +67,8 @@ export default function RoomDetailPage() {
 
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             {room.image_url && (
-              <div className="w-full h-64 bg-gray-200 overflow-hidden">
-                <img src={room.image_url} alt={room.name} className="w-full h-full object-cover" />
+              <div className="w-full h-64 bg-gray-200 overflow-hidden relative">
+                <Image src={room.image_url} alt={room.name} fill className="object-cover" />
               </div>
             )}
 
